@@ -18,8 +18,8 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(800, 600)
-        self.actionExit = QAction(MainWindow)
-        self.actionExit.setObjectName(u"actionExit")
+        self.actionQuit = QAction(MainWindow)
+        self.actionQuit.setObjectName(u"actionQuit")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.label = QLabel(self.centralwidget)
@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
-        self.menuFile.addAction(self.actionExit)
+        self.menuFile.addAction(self.actionQuit)
 
         self.retranslateUi(MainWindow)
 
@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Blood Bank Database", None))
-        self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
+        self.actionQuit.setText(QCoreApplication.translate("MainWindow", u"Quit", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Hello, World", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
