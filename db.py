@@ -1,36 +1,27 @@
-import mysql.connector
+from sqlalchemy import Column, Integer, String, Numeric, Float
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
-DATABASE='BloodBankDB'
+engine = create_engine('sqlite:///bloodbank.db', echo = True)
+Base = declarative_base()
 
-class BBDB:
-    def __init__(self, host, user, password):
-        self.connectDB(host, user, password)
-        mycursor = self.db.cursor()
+class Donor(Base):
+    __tablename__ = 'Donor'
     
-    def connectDB(self, host, user, password):
-        try:
-            self.db = mysql.connector.connect(
-                host=host,
-                user=user,
-                password=password,
-                database=DATABASE
-            )
-            self.status = 'Connected'
-        except mysql.connector.Error as err:
-            print(err)
-            if err.errno == 2003:
-                self.status = 'Cannot conect to server {host}'
-            elif err.errno == 1698:
-                self.status = 'Access denied'
-            elif err.errno == 1049:
-                initDB()
-        except:
-            self.status = f'Something Went Wrong: {err}'
-        print(self.status)
-    
-    def initDB(self):
-        mycursor = self.db.cursor()
-        mycursor.execute(f'CREATE DATABASE {DATABASE}')
+    did = Column(Integer, primary_key = True)
+    name = Column(String)
+    sex = Column(String)
+    age = Column(Integer)
+    address = Column(String)
+    phone = Column(Numeric(precision = 10, asdecimal = False, decimal_return_scale = None))
 
-if __name__ == '__main__':
-    x=BBDB('localhost', 'bloodbank', 'bloodbank')
+
+class Blood(Base):
+    __tablename__ = 'Blood'
+    
+    code = Column(Integer, primary_key = True)
+    cost = Column(Float)
+    blood_type = Column(String)
+
+
+Base.metadata.create_all(engine)
