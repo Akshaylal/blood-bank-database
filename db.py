@@ -1,9 +1,12 @@
 from sqlalchemy import Column, Integer, String, Numeric, Float
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
 
 engine = create_engine('sqlite:///bloodbank.db', echo = True)
 Base = declarative_base()
+
 
 class Donor(Base):
     __tablename__ = 'Donor'
@@ -22,6 +25,11 @@ class Blood(Base):
     code = Column(Integer, primary_key = True)
     cost = Column(Float)
     blood_type = Column(String)
+    did = Column(Integer)
 
 
 Base.metadata.create_all(engine)
+
+
+Session = sessionmaker(bind = engine)
+session = Session()
