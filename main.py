@@ -11,10 +11,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        
+        #Quit
         self.actionQuit.triggered.connect(self.quit)
+        
+        # Add Donor tab
         self.buttonBoxAdd.accepted.connect(self.saveAddDonor)
         self.buttonBoxAdd.rejected.connect(self.clearAddDonor)
     
+    # Find Blood tab
+    
+    # Donate Blood tab
+    
+    # Add Donor tab
     def saveAddDonor(self):
         tmp = Donor(
             name = self.inputNameAdd.text(),
@@ -25,7 +34,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         )
         session.add(tmp)
         session.commit()
-        print('save')
         self.clearAddDonor()
     
     def clearAddDonor(self):
@@ -34,8 +42,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.inputSexAdd.clear()
         self.inputPhoneAdd.clear()
         self.inputAddressAdd.clear()
-        print('clear')
     
+    # Quit
     def quit(self):
         print("quit")
         quit()
