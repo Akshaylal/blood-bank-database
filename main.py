@@ -3,13 +3,23 @@ from PySide6.QtWidgets import *
 from PySide6 import QtCore
 
 from ui_mainwindow import Ui_MainWindow
-from ui_login import Ui_LoginDialog
+
+from db import *
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.actionQuit.triggered.connect(self.quit)
+        self.buttonBoxAdd.accepted.connect(self.saveAddDonor)
+        self.buttonBoxAdd.rejected.connect(self.clearAddDonor)
+    
+    def saveAddDonor(self):
+        print('save')
+    
+    def clearAddDonor(self):
+        print('cancel')
     
     def quit(self):
         print("quit")
@@ -19,18 +29,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.quit()
 
 
-class Login(QDialog, Ui_LoginDialog):
-    def __init__(self, parent=None):
-        super(Login, self).__init__(parent)
-        self.setWindowTitle("Login")
-        self.setupUi(self)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    
-    #login = Login()
-    #login.show()
 
     window = MainWindow()
     window.show()
