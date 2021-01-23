@@ -16,10 +16,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.buttonBoxAdd.rejected.connect(self.clearAddDonor)
     
     def saveAddDonor(self):
+        tmp = Donor(
+            name = self.inputNameAdd.text(),
+            sex = self.inputSexAdd.text(),
+            age = self.inputAgeAdd.text(),
+            address = self.inputAddressAdd.toPlainText(),
+            phone = self.inputPhoneAdd.text()
+        )
+        session.add(tmp)
+        session.commit()
         print('save')
+        self.clearAddDonor()
     
     def clearAddDonor(self):
-        print('cancel')
+        self.inputNameAdd.clear()
+        self.inputAgeAdd.clear()
+        self.inputSexAdd.clear()
+        self.inputPhoneAdd.clear()
+        self.inputAddressAdd.clear()
+        print('clear')
     
     def quit(self):
         print("quit")
