@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String, Numeric, Float
+from sqlalchemy import Column, Integer, String, Numeric, Float, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 
-engine = create_engine('sqlite:///bloodbank.db', echo = True)
+engine = create_engine('sqlite:///bloodbank.db', echo = False)
 Base = declarative_base()
 
 
@@ -18,6 +18,7 @@ class Donor(Base):
     blood_type = Column(String)
     address = Column(String)
     phone = Column(Numeric(precision = 10, asdecimal = False, decimal_return_scale = None))
+    donate = relationship('Blood')
 
 
 class Blood(Base):
@@ -26,7 +27,7 @@ class Blood(Base):
     code = Column(Integer, primary_key = True)
     amount = Column(Integer)
     blood_type = Column(String)
-    did = Column(Integer)
+    did = Column(Integer, ForeignKey('Donor.did'))
 
 
 Base.metadata.create_all(engine)

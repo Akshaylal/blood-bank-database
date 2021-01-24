@@ -36,6 +36,30 @@ class Ui_MainWindow(object):
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabFindBlood = QWidget()
         self.tabFindBlood.setObjectName(u"tabFindBlood")
+        self.gridLayout_4 = QGridLayout(self.tabFindBlood)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.listBloodFind = QComboBox(self.tabFindBlood)
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.addItem("")
+        self.listBloodFind.setObjectName(u"listBloodFind")
+
+        self.gridLayout_4.addWidget(self.listBloodFind, 0, 0, 1, 2)
+
+        self.tableFind = QTableWidget(self.tabFindBlood)
+        if (self.tableFind.columnCount() < 4):
+            self.tableFind.setColumnCount(4)
+        self.tableFind.setObjectName(u"tableFind")
+        self.tableFind.setColumnCount(4)
+
+        self.gridLayout_4.addWidget(self.tableFind, 1, 0, 1, 1)
+
         self.tabWidget.addTab(self.tabFindBlood, "")
         self.tabDonate = QWidget()
         self.tabDonate.setObjectName(u"tabDonate")
@@ -230,9 +254,6 @@ class Ui_MainWindow(object):
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menuFile.addAction(self.actionQuit)
@@ -240,6 +261,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.tabWidget.setCurrentIndex(0)
+        self.listBloodFind.setCurrentIndex(0)
         self.listBloodDonate.setCurrentIndex(-1)
         self.listBloodAdd.setCurrentIndex(-1)
 
@@ -253,6 +275,16 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionQuit.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Q", None))
 #endif // QT_CONFIG(shortcut)
+        self.listBloodFind.setItemText(0, QCoreApplication.translate("MainWindow", u"All", None))
+        self.listBloodFind.setItemText(1, QCoreApplication.translate("MainWindow", u"A+", None))
+        self.listBloodFind.setItemText(2, QCoreApplication.translate("MainWindow", u"A-", None))
+        self.listBloodFind.setItemText(3, QCoreApplication.translate("MainWindow", u"B+", None))
+        self.listBloodFind.setItemText(4, QCoreApplication.translate("MainWindow", u"B-", None))
+        self.listBloodFind.setItemText(5, QCoreApplication.translate("MainWindow", u"AB+", None))
+        self.listBloodFind.setItemText(6, QCoreApplication.translate("MainWindow", u"AB-", None))
+        self.listBloodFind.setItemText(7, QCoreApplication.translate("MainWindow", u"O+", None))
+        self.listBloodFind.setItemText(8, QCoreApplication.translate("MainWindow", u"O-", None))
+
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabFindBlood), QCoreApplication.translate("MainWindow", u"Find Blood", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Name :", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"Blood :", None))

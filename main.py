@@ -20,6 +20,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Menu
         self.actionQuit.triggered.connect(self.quit)
         
+        # Find tab
+        self.showBloodList()
+        self.listBloodFind.currentIndexChanged.connect(self.showBloodList)
+        
         # Donate tab
         self.setSearchListDonate()
         self.buttonBoxDonate.accepted.connect(self.saveDonate)
@@ -30,6 +34,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.buttonBoxAdd.rejected.connect(self.clearAddDonor)
     
     # Find Blood tab
+    def showBloodList(self):
+        if self.listBloodFind.currentText() == 'All':
+            result = session.query(Donor).join(Blood).all()
+        else:
+            result = session.query(Donor).join(Blood).filter(Donor.blood_type == self.listBloodFind.currentText()).all()
+        if result == None:
+            return
+        self.tableFind.setRowCount(len(result) + 1)
+        self.tableFind.setItem(0,0, QTableWidgetItem('Name'))
+        self.tableFind.setItem(0,1, QTableWidgetItem('Phone'))
+        self.tableFind.setItem(0,2, QTableWidgetItem('Blood'))
+        self.tableFind.setItem(0,3, QTableWidgetItem('Amount'))
+        count = 1
+        for i in result:
+            amount = 0
+            for j in i.donate:
+                amount += j.amount
+            self.tableFind.setItem(count,0, QTableWidgetItem(i.name))
+            self.tableFind.setItem(count,1, QTableWidgetItem(str(i.phone)))
+            self.tableFind.setItem(count,2, QTableWidgetItem(i.blood_type))
+            self.tableFind.setItem(count,3, QTableWidgetItem(str(amount)))
+            count += 1
+        self.tableFind.horizontalHeader().setStretchLastSection(True) 
+        self.tableFind.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        pass
     
     # Donate Blood tab
     def setSearchListDonate(self):
@@ -79,6 +108,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.inputNameAdd.clear()
         self.inputAgeAdd.clear()
         self.inputSexAdd.clear()
+        self.listBloodAdd.setCurrentIndex(-1)
         self.inputPhoneAdd.clear()
         self.inputAddressAdd.clear()
     
