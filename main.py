@@ -21,7 +21,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionQuit.triggered.connect(self.quit)
         
         # Donate tab
-        self.setSearchList()
+        self.setSearchListDonate()
+        self.buttonBoxDonate.accepted.connect(self.saveDonate)
+        self.buttonBoxDonate.rejected.connect(self.clearDonate)
         
         # Add Donor tab
         self.buttonBoxAdd.accepted.connect(self.saveAddDonor)
@@ -30,14 +32,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Find Blood tab
     
     # Donate Blood tab
-    def setSearchList(self):
+    def setSearchListDonate(self):
         result = session.query(Donor).all()
         r = []
         for i in result:
             r.append(i.name)
         completer = QCompleter(r, self)
         self.inputNameDonate.setCompleter(completer)
-        pass
+    
+    def saveDonate(self):
+        result = session.query(Donor).filter(Donor.name == self.inputNameDonate.text()).first()
+        if result == None:
+            print('Donor does not exist')
+            return
+        tmp = Blood(
+            amount = self.inputAmountDonate.text(),
+            blood_type = self.listBloodDonate.currentText(),
+            did = result.did
+        )
+        session.add(tmp)
+        session.commit()
+        self.clearDonate()
+        print('save')
+    
+    def clearDonate(self):
+        self.inputNameDonate.clear()
+        self.listBloodDonate.setCurrentIndex(-1)
+        self.inputAmountDonate.clear()
     
     # Add Donor tab
     def saveAddDonor(self):
@@ -52,6 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         session.add(tmp)
         session.commit()
         self.clearAddDonor()
+        self.setSearchListDonate()
     
     def clearAddDonor(self):
         self.inputNameAdd.clear()
@@ -62,7 +84,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     # Quit
     def quit(self):
-        print("quit")
+        print('quit')
         quit()
     
     def closeEvent(self, event):

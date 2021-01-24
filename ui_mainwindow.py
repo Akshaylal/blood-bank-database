@@ -82,23 +82,23 @@ class Ui_MainWindow(object):
 
         self.formDonate.setWidget(2, QFormLayout.FieldRole, self.inputAmountDonate)
 
-        self.buttonBox = QDialogButtonBox(self.tabDonate)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
-
-        self.formDonate.setWidget(4, QFormLayout.FieldRole, self.buttonBox)
-
         self.label_11 = QLabel(self.tabDonate)
         self.label_11.setObjectName(u"label_11")
 
         self.formDonate.setWidget(3, QFormLayout.FieldRole, self.label_11)
+
+        self.buttonBoxDonate = QDialogButtonBox(self.tabDonate)
+        self.buttonBoxDonate.setObjectName(u"buttonBoxDonate")
+        self.buttonBoxDonate.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Save)
+
+        self.formDonate.setWidget(4, QFormLayout.FieldRole, self.buttonBoxDonate)
 
 
         self.gridLayout_3.addLayout(self.formDonate, 1, 1, 1, 1)
 
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_3.addItem(self.horizontalSpacer_4, 1, 2, 1, 1)
+        self.gridLayout_3.addItem(self.horizontalSpacer_4, 1, 3, 1, 1)
 
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -229,15 +229,12 @@ class Ui_MainWindow(object):
         self.menubar.setGeometry(QRect(0, 0, 800, 30))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
-        self.menuHelp = QMenu(self.menubar)
-        self.menuHelp.setObjectName(u"menuHelp")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
         self.menuFile.addAction(self.actionQuit)
 
         self.retranslateUi(MainWindow)
@@ -295,6 +292,5 @@ class Ui_MainWindow(object):
         self.listBloodAdd.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Select Type", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabAddDonor), QCoreApplication.translate("MainWindow", u"Add Donor", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"&File", None))
-        self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"&Help", None))
     # retranslateUi
 
