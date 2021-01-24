@@ -1,6 +1,7 @@
 import sys
 from PySide6.QtWidgets import *
 from PySide6 import QtCore
+#from PySide6.QtGui import QShortcut, QKeySequence
 
 from ui_mainwindow import Ui_MainWindow
 
@@ -12,8 +13,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
         
-        #Quit
+        # Shortcut
+        #self.quitSc = QShortcut(QKeySequence('Ctrl+Q'), self)
+        #self.quitSc.activated.connect(self.quit)
+        
+        # Menu
         self.actionQuit.triggered.connect(self.quit)
+        
+        # Donate tab
+        self.setSearchList()
         
         # Add Donor tab
         self.buttonBoxAdd.accepted.connect(self.saveAddDonor)
@@ -22,6 +30,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Find Blood tab
     
     # Donate Blood tab
+    def setSearchList(self):
+        result = session.query(Donor).all()
+        r = []
+        for i in result:
+            r.append(i.name)
+        completer = QCompleter(r, self)
+        self.inputNameDonate.setCompleter(completer)
+        pass
     
     # Add Donor tab
     def saveAddDonor(self):
@@ -29,6 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             name = self.inputNameAdd.text(),
             sex = self.inputSexAdd.text(),
             age = self.inputAgeAdd.text(),
+            blood_type = self.listBloodAdd.currentText(),
             address = self.inputAddressAdd.toPlainText(),
             phone = self.inputPhoneAdd.text()
         )
