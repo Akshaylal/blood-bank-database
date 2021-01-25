@@ -104,6 +104,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         session.commit()
         self.clearDonate()
         self.showBloodList()
+        QMessageBox.information(self, 'Success', 'Blood donated')
     
     def clearDonate(self):
         self.inputNameDonate.clear()
@@ -125,6 +126,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.clearAddDonor()
         self.setSearchListDonate()
         self.showBloodList()
+        QMessageBox.information(self, 'Success', 'Donor Added')
     
     def clearAddDonor(self):
         self.inputNameAdd.clear()
