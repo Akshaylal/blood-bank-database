@@ -1,11 +1,32 @@
 import sys
 from PySide6.QtWidgets import *
-from PySide6 import QtCore
-#from PySide6.QtGui import QShortcut, QKeySequence
+from PySide6 import QtCore, QtGui
+
+import bcrypt
 
 from ui_mainwindow import Ui_MainWindow
+from ui_login import Ui_LoginDialog
 
 from db import *
+
+
+class LoginDialog(QDialog, Ui_LoginDialog):
+    def __init__(self, *args, **kwargs):
+        super(LoginDialog, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+        
+        self.pushButtonLogin.clicked.connect(self.verify)
+        self.pushButtonCancel.clicked.connect(quit)
+    
+    def verify(self):
+        result = session.query(User).filter(User.user == self.inputUsername.text()).first()
+        if result == None:
+            QMessageBox.warning(self, 'Error', 'Invalid user or password')
+            return
+        if bcrypt.checkpw(self.inputPassword.text().encode('utf-8'), result.password):
+            self.accept()
+        else:
+            QMessageBox.warning(self, 'Error', 'Invalid user or password')
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -72,7 +93,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def saveDonate(self):
         result = session.query(Donor).filter(Donor.name == self.inputNameDonate.text()).first()
         if result == None:
-            print('Donor does not exist')
+            QMessageBox.warning(self, 'Error', 'Donor is not registered')
             return
         tmp = Blood(
             amount = self.inputAmountDonate.text(),
@@ -82,7 +103,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         session.add(tmp)
         session.commit()
         self.clearDonate()
-        print('save')
+        self.showBloodList()
     
     def clearDonate(self):
         self.inputNameDonate.clear()
@@ -103,6 +124,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         session.commit()
         self.clearAddDonor()
         self.setSearchListDonate()
+        self.showBloodList()
     
     def clearAddDonor(self):
         self.inputNameAdd.clear()
@@ -125,8 +147,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
-    window = MainWindow()
-    window.show()
     
-    sys.exit(app.exec_())
+    login = LoginDialog()
+    login.show()
+    
+    if login.exec_() == QDialog.Accepted:
+        window = MainWindow()
+        window.show()
+        sys.exit(app.exec_())

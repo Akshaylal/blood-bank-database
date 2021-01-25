@@ -29,6 +29,13 @@ class Blood(Base):
     blood_type = Column(String)
     did = Column(Integer, ForeignKey('Donor.did'))
 
+class User(Base):
+    __tablename__ = 'UserLogin'
+    
+    uid = Column(Integer, primary_key = True)
+    user = Column(String)
+    password = Column(String)
+
 
 Base.metadata.create_all(engine)
 

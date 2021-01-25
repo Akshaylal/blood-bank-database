@@ -17,53 +17,41 @@ class Ui_LoginDialog(object):
     def setupUi(self, LoginDialog):
         if not LoginDialog.objectName():
             LoginDialog.setObjectName(u"LoginDialog")
-        LoginDialog.resize(408, 318)
-        self.formLayoutWidget = QWidget(LoginDialog)
-        self.formLayoutWidget.setObjectName(u"formLayoutWidget")
-        self.formLayoutWidget.setGeometry(QRect(80, 50, 246, 181))
-        self.formLayout = QFormLayout(self.formLayoutWidget)
-        self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setContentsMargins(0, 0, 0, 0)
-        self.label = QLabel(self.formLayoutWidget)
+        LoginDialog.resize(400, 300)
+        LoginDialog.setMinimumSize(QSize(400, 300))
+        LoginDialog.setMaximumSize(QSize(400, 300))
+        self.gridLayout = QGridLayout(LoginDialog)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.label = QLabel(LoginDialog)
         self.label.setObjectName(u"label")
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
 
-        self.lineEdit = QLineEdit(self.formLayoutWidget)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.inputUsername = QLineEdit(LoginDialog)
+        self.inputUsername.setObjectName(u"inputUsername")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit)
+        self.gridLayout.addWidget(self.inputUsername, 0, 1, 1, 2)
 
-        self.label_2 = QLabel(self.formLayoutWidget)
+        self.label_2 = QLabel(LoginDialog)
         self.label_2.setObjectName(u"label_2")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
+        self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
 
-        self.lineEdit_2 = QLineEdit(self.formLayoutWidget)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.inputPassword = QLineEdit(LoginDialog)
+        self.inputPassword.setObjectName(u"inputPassword")
+        self.inputPassword.setEchoMode(QLineEdit.Password)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.lineEdit_2)
+        self.gridLayout.addWidget(self.inputPassword, 1, 1, 1, 2)
 
-        self.lineEdit_3 = QLineEdit(self.formLayoutWidget)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.pushButtonLogin = QPushButton(LoginDialog)
+        self.pushButtonLogin.setObjectName(u"pushButtonLogin")
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.lineEdit_3)
+        self.gridLayout.addWidget(self.pushButtonLogin, 2, 1, 1, 1)
 
-        self.label_3 = QLabel(self.formLayoutWidget)
-        self.label_3.setObjectName(u"label_3")
+        self.pushButtonCancel = QPushButton(LoginDialog)
+        self.pushButtonCancel.setObjectName(u"pushButtonCancel")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
-
-        self.buttonBox = QDialogButtonBox(self.formLayoutWidget)
-        self.buttonBox.setObjectName(u"buttonBox")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.buttonBox.sizePolicy().hasHeightForWidth())
-        self.buttonBox.setSizePolicy(sizePolicy)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
-
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.buttonBox)
+        self.gridLayout.addWidget(self.pushButtonCancel, 2, 2, 1, 1)
 
 
         self.retranslateUi(LoginDialog)
@@ -73,8 +61,9 @@ class Ui_LoginDialog(object):
 
     def retranslateUi(self, LoginDialog):
         LoginDialog.setWindowTitle(QCoreApplication.translate("LoginDialog", u"Login", None))
-        self.label.setText(QCoreApplication.translate("LoginDialog", u"Host", None))
-        self.label_2.setText(QCoreApplication.translate("LoginDialog", u"Username", None))
-        self.label_3.setText(QCoreApplication.translate("LoginDialog", u"Password", None))
+        self.label.setText(QCoreApplication.translate("LoginDialog", u"Username :", None))
+        self.label_2.setText(QCoreApplication.translate("LoginDialog", u"Password :", None))
+        self.pushButtonLogin.setText(QCoreApplication.translate("LoginDialog", u"Login", None))
+        self.pushButtonCancel.setText(QCoreApplication.translate("LoginDialog", u"Cancel", None))
     # retranslateUi
 
